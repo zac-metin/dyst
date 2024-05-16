@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Sale DApp</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Buy Tokens</h1>
+    <form id="buyTokensForm">
+        <label for="amount">Amount of BNB to Spend:</label>
+        <input type="text" id="amount" name="amount" placeholder="0.002">
+        <button type="submit">Buy Tokens</button>
+    </form>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <script>
+      // app.js
+
+window.addEventListener('load', async () => {
+    if (window.ethereum) {
+        window.web3 = new Web3(window.ethereum);
+        try {
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            initApp();
+        } catch (error) {
+            console.error("User denied account access");
+        }
+    } else if (window.web3) {
+        window.web3 = new Web3(window.web3.currentProvider);
+        initApp();
+    } else {
+        console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+    }
+});
+
+async function initApp() {
+    const contractAddress = '0x66b1Ff225C5D37665Bc5756B793EF981eC65413a'; // Replace with your contract address
+    const contractABI = [ // Replace with your contract ABI
+        {
+            "inputs": [],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "_buyer",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "_amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "Sell",
+            "type": "event"
+        },
+        {
+            "inputs": [],
+            "name": "admin",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "buyTokens",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "tokenContract",
+            "outputs": [
+                {
+                    "internalType": "contract IERC20",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "tokenPrice",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "tokensSold",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "withdrawBNB",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "withdrawTokens",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        }
+    ];
+
+    const accounts = await web3.eth.getAccounts();
+    const account = accounts[0];
+
+    const tokenSaleContract = new web3.eth.Contract(contractABI, contractAddress);
+
+    document.getElementById('buyTokensForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const amount = document.getElementById('amount').value;
+        const valueInWei = web3.utils.toWei(amount, 'ether');
+
+        try {
+            await tokenSaleContract.methods.buyTokens().send({
+                from: account,
+                value: valueInWei
+            });
+            alert('Token purchase successful');
+        } catch (error) {
+            console.error(error);
+            alert('Token purchase failed');
+        }
+    });
+};
+
+    </script>
+</body>
+</html>
