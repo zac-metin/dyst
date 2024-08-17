@@ -288,43 +288,45 @@ Copy code
 
                                 const contractAddress = '0x66b1ff225c5d37665bc5756b793ef981ec65413a'; // Replace with your contract address
 
-                // Create a contract instance
-                const tokenSaleContract = new web3.eth.Contract(contractABI, contractAddress);
+ console.log("Contract instance created");
 
-                // Handle form submission
-                document.getElementById('buyForm').onsubmit = async (e) => {
-                    console.log("Form submitted");
-                    e.preventDefault(); // Prevent the form from submitting the traditional way
-                    console.log("Form submission prevented!");
+        // Handle form submission
+        document.getElementById('buyForm').onsubmit = async (e) => {
+            e.preventDefault();
+            console.log("Form submitted");
 
-                    const amount = document.getElementById('amount').value;
-                    if (!amount || isNaN(amount) || Number(amount) <= 0) {
-                        document.getElementById('status').innerText = 'Please enter a valid amount.';
-                        return;
-                    }
+            const amount = document.getElementById('amount').value;
+            console.log("Amount entered:", amount);
 
-                    try {
-                        const accounts = await web3.eth.getAccounts();
-                        const from = accounts[0];
-
-                        // Convert the amount to Wei (since MATIC is an 18-decimal token)
-                        const value = web3.utils.toWei(amount, 'ether');
-
-                        // Call the buyTokens function of the contract
-                        await tokenSaleContract.methods.buyTokens().send({
-                            from: from,
-                            value: value
-                        });
-
-                        document.getElementById('status').innerText = 'Transaction successful!';
-                    } catch (error) {
-                        console.error(error);
-                        document.getElementById('status').innerText = 'Transaction failed!';
-                    }
-                };
-            } else {
-                alert('Please install MetaMask!');
+            if (!amount || isNaN(amount) || Number(amount) <= 0) {
+                document.getElementById('status').innerText = 'Please enter a valid amount.';
+                return;
             }
+
+            try {
+                const accounts = await web3.eth.getAccounts();
+                console.log("Accounts retrieved:", accounts);
+                const from = accounts[0];
+
+                // Convert the amount to Wei (since MATIC is an 18-decimal token)
+                const value = web3.utils.toWei(amount, 'ether');
+                console.log("Value to send (in Wei):", value);
+
+                // Call the buyTokens function of the contract
+                await tokenSaleContract.methods.buyTokens().send({
+                    from: from,
+                    value: value
+                });
+
+                document.getElementById('status').innerText = 'Transaction successful!';
+            } catch (error) {
+                console.error(error);
+                document.getElementById('status').innerText = 'Transaction failed!';
+            }
+        };
+    } else {
+        alert('Please install MetaMask!');
+    }
         });
     </script>
 </body>
