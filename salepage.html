@@ -79,8 +79,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log("MetaMask is not installed");
         alert('Please install MetaMask!');
     }
-});
-        document.addEventListener('DOMContentLoaded', async () => {
+
             if (typeof window.ethereum !== 'undefined') {
                 // Request account access if needed
                 await ethereum.request({ method: 'eth_requestAccounts' });
