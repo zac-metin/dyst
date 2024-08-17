@@ -1,3 +1,5 @@
+
+Copy code
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,18 +71,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
     <script>
-console.log("JavaScript loaded");
-document.addEventListener('DOMContentLoaded', async () => {
-    console.log("DOM fully loaded and parsed");
-    if (typeof window.ethereum !== 'undefined') {
-        console.log("MetaMask is installed");
-        // Rest of the code
-    } else {
-        console.log("MetaMask is not installed");
-        alert('Please install MetaMask!');
-    }
+        console.log("JavaScript loaded");
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log("DOM fully loaded and parsed");
 
             if (typeof window.ethereum !== 'undefined') {
+                console.log("MetaMask is installed");
+
                 // Request account access if needed
                 await ethereum.request({ method: 'eth_requestAccounts' });
 
@@ -288,17 +286,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   ];
 
-                const contractAddress = '0x66b1ff225c5d37665bc5756b793ef981ec65413a'; // Replace with your contract address
+                                const contractAddress = '0x66b1ff225c5d37665bc5756b793ef981ec65413a'; // Replace with your contract address
 
                 // Create a contract instance
                 const tokenSaleContract = new web3.eth.Contract(contractABI, contractAddress);
 
                 // Handle form submission
                 document.getElementById('buyForm').onsubmit = async (e) => {
-console.log("Form submitted");
-                    e.preventDefault();
+                    console.log("Form submitted");
+                    e.preventDefault(); // Prevent the form from submitting the traditional way
                     console.log("Form submission prevented!");
+
                     const amount = document.getElementById('amount').value;
+                    if (!amount || isNaN(amount) || Number(amount) <= 0) {
+                        document.getElementById('status').innerText = 'Please enter a valid amount.';
+                        return;
+                    }
 
                     try {
                         const accounts = await web3.eth.getAccounts();
