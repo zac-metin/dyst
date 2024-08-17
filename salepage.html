@@ -285,6 +285,7 @@
 
                 // Handle form submission
                 document.getElementById('buyForm').onsubmit = async (e) => {
+console.log("Form submitted");
                     e.preventDefault();
                     console.log("Form submission prevented!");
                     const amount = document.getElementById('amount').value;
