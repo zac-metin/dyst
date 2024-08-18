@@ -1,6 +1,6 @@
 // Function to load the ABI from the JSON file
 async function loadABI() {
-    const response = await fetch('contractABI.json');
+    const response = await fetch('salespage-abi.json');
     return await response.json();
 }
 console.log("JavaScript loaded");
