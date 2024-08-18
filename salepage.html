@@ -9,12 +9,15 @@
 <body>
     <div class="container">
         <h1>Buy DTFU Tokens</h1>
-        <form id="buyForm">
-            <label for="amount">Amount of MATIC:</label>
-            <input type="text" id="amount" placeholder="Enter amount in MATIC">
-            <button type="submit">Buy DTFU Tokens</button>
-        </form>
-        <p id="status"></p>
+<form id="buyForm">
+    <label for="amount">Amount of MATIC:</label>
+    <input type="text" id="amount" placeholder="Enter amount in MATIC">
+    <label for="gasPrice">Gas Price (Gwei):</label>
+    <input type="text" id="gasPrice" placeholder="Enter gas price in Gwei">
+    <button type="submit">Buy DTFU Tokens</button>
+</form>
+<p id="status"></p>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
