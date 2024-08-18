@@ -1,3 +1,9 @@
+// Function to load the ABI from the JSON file
+async function loadABI() {
+    const response = await fetch('contractABI.json');
+    return await response.json();
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     console.log("DOM fully loaded and parsed");
 
@@ -72,10 +78,3 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert('Please install MetaMask!');
     }
 });
-
-// Function to load the ABI from the JSON file
-async function loadABI() {
-    const response = await fetch('contractABI.json');
-    return await response.json();
-}
-
