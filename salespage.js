@@ -12,8 +12,9 @@ async function loadABI() {
                 console.log("MetaMask is installed");
 
                 // Request account access if needed
-                // await ethereum.request({ method: 'eth_requestAccounts' });
-                // console.log("eth request made");
+                await ethereum.request({ method: 'eth_requestAccounts' })
+.then(() => console.log("eth request made"))
+.catch((error) => console.error("Error during account request:", error));
                 // Create a Web3 instance using MetaMask's provider
                 const web3 = new Web3(window.ethereum);
 console.log("Web3 instance created");
