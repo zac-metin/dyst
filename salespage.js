@@ -3,26 +3,27 @@ async function loadABI() {
     const response = await fetch('contractABI.json');
     return await response.json();
 }
-        console.log("JavaScript loaded");
-        /// loaded script
-        document.addEventListener('DOMContentLoaded', async () => {
-            console.log("DOM fully loaded and parsed");
+console.log("JavaScript loaded");
+/// loaded script
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log("DOM fully loaded and parsed");
 
-            if (typeof window.ethereum !== 'undefined') {
-                console.log("MetaMask is installed");
+    if (typeof window.ethereum !== 'undefined') {
+        console.log("MetaMask is installed");
 
-                // Request account access if needed
-                await ethereum.request({ method: 'eth_requestAccounts' })
-.then(() => console.log("eth request made"))
-.catch((error) => console.error("Error during account request:", error));
-const contractABI = await loadABI();
-                // Create a Web3 instance using MetaMask's provider
-                const web3 = new Web3(window.ethereum);
-console.log("Web3 instance created");
+        // Request account access if needed
+        await ethereum.request({ method: 'eth_requestAccounts' })
+            .then(() => console.log("eth request made"))
+            .catch((error) => console.error("Error during account request:", error));
+        const contractABI = await loadABI();
+        console.log("Loaded ABI")
+        // Create a Web3 instance using MetaMask's provider
+        const web3 = new Web3(window.ethereum);
+        console.log("Web3 instance created");
 
-  const contractAddress = '0x66b1ff225c5d37665bc5756b793ef981ec65413a'; // Replace with your contract address
-       const tokenSaleContract = new web3.eth.Contract(contractABI, contractAddress);
- console.log("Contract instance created");
+        const contractAddress = '0x66b1ff225c5d37665bc5756b793ef981ec65413a'; // Replace with your contract address
+        const tokenSaleContract = new web3.eth.Contract(contractABI, contractAddress);
+        console.log("Contract instance created");
 
         // Handle form submission
         document.getElementById('buyForm').onsubmit = async (e) => {
@@ -61,4 +62,4 @@ console.log("Web3 instance created");
     } else {
         alert('Please install MetaMask!');
     }
-        });
+});
