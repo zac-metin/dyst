@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const web3 = new Web3(window.ethereum);
         console.log("Web3 instance created");
 
-        const contractAddress = '0x66b1ff225c5d37665bc5756b793ef981ec65413a'; // Replace with your contract address
+        const contractAddress = '0xA0C63dCaF952D878B35E40E8b453f309578782a0'; // Replace with your contract address
         
         // Load the ABI from JSON file
         const contractABI = await loadABI();
